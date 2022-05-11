@@ -14,16 +14,11 @@ import 'package:auto_route/auto_route.dart' as _i3;
 import 'package:flutter/material.dart' as _i4;
 
 import 'login_screen.dart' as _i2;
-import 'reader_auth_guard.dart' as _i5;
 import 'reader_screen.dart' as _i1;
 
 class ReaderRouter extends _i3.RootStackRouter {
-  ReaderRouter(
-      {_i4.GlobalKey<_i4.NavigatorState>? navigatorKey,
-      required this.readerAuthGuard})
+  ReaderRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
       : super(navigatorKey);
-
-  final _i5.ReaderAuthGuard readerAuthGuard;
 
   @override
   final Map<String, _i3.PageFactory> pagesMap = {
@@ -46,8 +41,7 @@ class ReaderRouter extends _i3.RootStackRouter {
   List<_i3.RouteConfig> get routes => [
         _i3.RouteConfig('/#redirect',
             path: '/', redirectTo: '/reader', fullMatch: true),
-        _i3.RouteConfig(ReaderRoute.name,
-            path: '/reader', guards: [readerAuthGuard]),
+        _i3.RouteConfig(ReaderRoute.name, path: '/reader'),
         _i3.RouteConfig(LoginRoute.name, path: '/login')
       ];
 }
