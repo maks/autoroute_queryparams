@@ -17,14 +17,18 @@ class ReaderAuthGuard extends AutoRedirectGuard {
   }
 
   @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
-    final account = ref.read(authServiceProvider).currentAccount;
+  Future<void> onNavigation(NavigationResolver resolver, StackRouter router) async {
     print("AuthGuard onNavigation");
-    if (account == null) {
-      redirect(const LoginRoute(), resolver: resolver);
+    if (await canNavigate(resolver.route)) {
+      resolver.next();
     } else {
-      // if are logged in successfully, we can proceed to the screen the user requested
-      resolver.next(true);
+      redirect(const LoginRoute(), resolver: resolver);
     }
+  }
+
+  @override
+  Future<bool> canNavigate(RouteMatch route) async {
+    final account = ref.read(authServiceProvider).currentAccount;
+    return account != null;
   }
 }
